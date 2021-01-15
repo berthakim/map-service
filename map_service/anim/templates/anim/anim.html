@@ -1,0 +1,14 @@
+{% extends "anim/base.html" %}
+{% block anim %}active{% endblock %}
+{% block content %}
+
+<title>Anim</title>
+
+<div class="first_line">
+	<h1>Test</h1>
+	<div style="width:1000;height:100">
+		{{ graph_div|safe }}
+	</div>
+</div>
+
+{% endblock content %}

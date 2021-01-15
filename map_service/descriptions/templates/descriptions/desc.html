@@ -1,0 +1,28 @@
+{% extends "descriptions/base.html" %}
+{% block content %}
+
+  <div class="container first_line">
+    <h2>News, articles</h2>
+    <p>about GIS, DS, ML application cases, tutorials...</p>
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>image</th>
+          <th>abstract</th>
+          <th>author</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for article in articles %}
+        <tr>
+          <td><a href=#></a></td>
+          <td><img src=#>There is nothing for a while</td>
+          <td>Test</td>
+          <td>Test</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}

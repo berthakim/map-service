@@ -1,0 +1,149 @@
+{% extends "meteo/base.html" %}
+{% block meteo %}active{% endblock %}
+{% block content %}
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Leaflet Control.Layers</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+  <script type="text/javascript" src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"></script>
+
+  <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:50px; bottom:0; right:0; left:0; }
+
+    .leaflet-popup-content-wrapper {
+      background-color: gray;
+      opacity: 0.9;
+      width: 290px;
+      font-size: 14pt;
+      color: white;
+      text-align: center;
+    }
+
+    .leaflet-popup-tip {
+      background-color: gray;
+    }
+    .glyph-search {
+      margin-right: 0
+
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+/*for switch*/
+  var maps = L.layerGroup();
+
+  // more than one service can be grouped together and passed to the control together
+  L.esri.basemapLayer('Streets').addTo(maps);
+  // L.esri.basemapLayer('GrayLabels').addTo(gray);
+  // L.esri.basemapLayer('DarkGray').addTo(maps);
+
+/*fin for switch*/
+
+  //sample data values for populate map
+  var data = [
+    {"loc":[61.985803246336188, 129.298710419985997], "title":"Vladimirovka I", "img":"{% for site in sites.all %}{% if site.id == 1 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+    {"loc":[62.088491705049411, 129.304300411588162], "title":"Fermennoe Ozero", "img":"{% for site in sites.all %}{% if site.id == 2 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+    {"loc":[61.999262750194857, 129.303276611526189], "title":"Kapitonovka", "img":"{% for site in sites.all %}{% if site.id == 3 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+    {"loc":[62.288307030702407, 129.277373628272034], "title":"Krasnoye Ozero", "img":"{% for site in sites.all %}{% if site.id == 4 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+    {"loc":[62.288307030702407, 129.576290557364138], "title":"Vladimirovka II", "img":"{% for site in sites.all %}{% if site.id == 5 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+    {"loc":[61.80290541498532, 129.576290557364138], "title":"Energetik II", "img":"{% for site in sites.all %}{% if site.id == 6 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+    {"loc":[61.999988888888888, 129.485146215603152], "title":"Vladimirovka III", "img":"{% for site in sites.all %}{% if site.id == 3 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+    {"loc":[61.90777777777, 129.5], "title":"Vladimirovka V", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.433031, 6.736018], "title":"Frejus", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.57576, 6.40130], "title":"Castrum de Reynier", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.60653, 6.38385], "title":"village d'Ampus", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.54678, 6.56885], "title":"Pennafort", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.58736, 6.55411], "title":"Saint-Auxile", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.59308, 6.53826], "title":"village de Callas", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.42939, 6.73686], "title":"BUTTE SAINT-ANTOINE", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.40304, 6.38234], "title":"Les Bla??s 2 (Forum Voconi)", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.49878, 6.33406], "title":"Les Roberts", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.39249, 6.3119], "title":"Eglise Notre-Dame de Nazareth/Tour Hexagonale", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.38166, 6.31961], "title":"Les Vaquettes", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.38603, 6.31528], "title":"Les Mueilles", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.70273, 6.68359], "title":"Le Faou de Saint-Marcellin Nord", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+
+    {"loc":[ 43.58102, 6.26989], "title":"Eglise Sainte-Marie de Villecroze", "img":"{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 220px;\">{% else %}{% endif %}{% endfor %}"},
+  ];
+
+  var map = L.map('map', {
+    // center: [62.0, 129.6],
+    center: [43.652164058, 6.393165894],
+    zoom: 6,
+    layers: [maps]
+  });
+
+  var baseLayers = {
+    Streetmap: maps,
+    // Grayscale: gray,
+    Satellite: L.esri.basemapLayer('Imagery')
+  };
+
+    // images raster:
+  lyrRelief = L.imageOverlay('{% for image in images.all %}{% if image.id_img == 1 %}{{ image.imgfile.url }}{% else %}{% endif %}{% endfor %}', [[], []]);
+
+  lyrKernel = L.imageOverlay('{% for image in images.all %}{% if image.id_img == 2 %}{{ image.imgfile.url }}{% else %}{% endif %}{% endfor %}', []);
+
+  lyrNewark = L.imageOverlay('http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg', [[40.712216, -74.22655], [40.773941, -74.12544]]);
+
+
+  var markersLayer = new L.LayerGroup();  //layer contain searched elements
+
+  map.addLayer(markersLayer);
+
+  var controlSearch = new L.Control.Search({
+    position:'topright',
+    layer: markersLayer,
+    initial: false,
+    zoom: 12,
+    marker: false
+  });
+
+  map.addControl( controlSearch );
+
+  //populate map with markers from sample data
+  for(i in data) {
+    var title = data[i].title,  //value searched
+      img = data[i].img,
+      loc = data[i].loc,    //position found
+      marker = new L.Marker(new L.latLng(loc), {title: title}, {img: img} );//se property searched
+    marker.bindPopup(title + '<p>' + img + '</p>');
+    markersLayer.addLayer(marker);
+  }
+
+  var overlays = {
+    'Relief': lyrRelief,
+    'Kernel Density':lyrKernel,
+    'Newark': lyrNewark,
+  };
+
+L.control.scale().addTo(map);
+L.control.layers(baseLayers, overlays).addTo(map);
+</script>
+
+</body>
+</html>
+
+{% endblock content %}
+
+<!-- https://github.com/stefanocudini/leaflet-search -->

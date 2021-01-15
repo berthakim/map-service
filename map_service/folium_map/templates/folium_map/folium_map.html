@@ -1,0 +1,12 @@
+{% extends "folium_map/base.html" %}
+{% block folium_map %}active{% endblock %}
+{% block content %}
+
+<title>Map</title>
+<div class="first_line">
+
+	{{ weather_f_map|safe }}
+
+</div>
+
+{% endblock content %}

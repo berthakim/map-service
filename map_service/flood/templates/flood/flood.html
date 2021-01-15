@@ -1,0 +1,184 @@
+{% extends "flood/base.html" %}
+{% block flood_active %}active{% endblock %}
+{% block content %}
+
+<div id="map" class="leaflet-container leaflet-fade-anim first_line_map" style="position: relative;" tabindex="0">
+  <div class="leaflet-map-pane" style="transform: translate3d(230px, 0px, 0px);">
+    <div class="leaflet-tile-pane">
+      <div class="leaflet-layer">
+        <div class="leaflet-tile-container"></div>
+      </div>
+    </div>
+  </div>
+  <div class="leaflet-control-container">
+    <div class="leaflet-sidebar left visible">
+      <div id="sidebar" class="leaflet-control">
+        <div id="info"><h3><i>Click on site to see the information about site</i></h3></div>
+      </div>
+      <div class="leaflet-top leaflet-right"></div>
+      <div class="leaflet-bottom leaflet-left"></div>
+      <div class="leaflet-bottom leaflet-right"></div>
+    </div>
+  </div>
+<script>
+  var geojson = {
+  "type":"FeatureCollection",
+  "features":[
+  { "type": "Feature", "properties": { "lieu": "Vladimirovka BOOOOGAGA", "imgy": "{% for site in sites.all %}{% if site.id == 4 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 223px;\">{% else %}{% endif %}{% endfor %}", "descr":"<p style=\"margin-top:20px;\">Памятник был открыт в 1996 г. Якутским отрядом археологической экспедиции Якутского госуниверситета, разведочные работы на памятнике велись в 1996-1998, 2000 гг., осмотр проводился также в 2009 и 2010 гг. Стоянка находится у подножия левого борта южной Владимировской пади. В данном месте участок пади представляет собой слабовыраженный террасовидный уступ делювиального характера 5-7 метровой высоты, хорошо освещаемый солнцем в летний период и покрытый смешанным сосново-лиственнично-берёзовым лесом. </p>", "iframe3": "rien" }, "geometry": { "type": "Point", "coordinates": [ 14440232.880829565227032, 8864868.11990000680089 ] } },
+  { "type": "Feature", "properties": { "lieu": "Orbit 18 km", "imgy": "{% for site in sites.all %}{% if site.id == 7 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 223px;\">{% else %}{% endif %}{% endfor %}", "descr":"<p style=\"margin-top:20px;\">Памятник приурочен к возвышенности островной (останцовой) террасы, окружённой пересыхающими озёрами, находящейся в 17,85 км юго-западнее г. Якутска, в 1,75 км северо-восточнее с. Владимировка, приблизительно в 0,4-0,5 км восточнее Покровского шоссе (18 км), в 0,8 км юго-западнее станции «Орбита», в урочище Сатагай. Памятник был открыт в 2002 г. Якутским отрядом археологической экспедиции Якутского госуниверситета, обследовался также в 2004 г. Материалы памятника представлены подъёмным материалом, собранным на раздернованной поверхности, в потревоженном слое.</p>", "iframe3": "rien" }, "geometry": { "type": "Point", "coordinates": [ 14441751.499910054728389, 8865568.682187795639038 ] } },
+  { "type": "Feature", "properties": { "lieu": "Energetik II", "imgy": "{% for site in sites.all %}{% if site.id == 8 %}<img src=\"{{ site.site_logo.url }}\" style=\"height: 223px;\">{% else %}{% endif %}{% endfor %}", "descr":"<p style=\"margin-top:20px;\">Памятник был открыт в 2008 г. Якутским отрядом археологической экспедиции Якутского госуниверситета, дополнительно осмотрен в 2009 и 2010 гг. Здесь, в отвалах свежих противопожарных траншей у трансформаторной будки, находящейся правее центрального входа в лагерь «Энергетик», был собран обильный подъёмный материал: 276 фрагментов керамики (сетчатая – 15, шнуровая – 50, вафельная – 33, гладкостенная с рассечёнными налепными валиками – 178 (из них венчики – 17, с бортиком – 7, привенчиковые части – 8)), 48 каменных изделий (1 кремнёвый нож, 1 кварцитовый топор «с ушками», 14 пластин и микропластин, 28 кремнёвых отщепов, 4 осколка и обломка кремня), 1 фрагмент окремнелого дерева и 1 фрагмент кости.</p>", "iframe3": "rien" }, "geometry": { "type": "Point", "coordinates": [ 14440963.808167312294245, 8865148.863544629886746 ] } }
+  ]
+};
+
+var features = new ol.format.GeoJSON().readFeatures(geojson);
+
+features.forEach(function(feature){ feature.setId(undefined) });
+
+var myStyle = new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 7,
+        fill: new ol.style.Fill({color: 'green'}),
+        stroke: new ol.style.Stroke({
+          color: 'blue', width: 1
+        })
+      })
+    });
+
+/*for image raster*/
+var extent = [14435495.7, 8861886.6, 14447224.9, 8868386.9];   
+var projection = new ol.proj.Projection({
+  code: 'xkcd-image',
+  units: 'pixels',
+  extent: extent
+  });
+(function() {
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Group({
+                'title': 'Base maps',
+                layers: [
+                    new ol.layer.Group({
+                        title: 'Stamen WaterColor',
+                        type: 'base',
+                        combine: true,
+                        visible: false,
+                        layers: [
+                            new ol.layer.Tile({
+                                source: new ol.source.Stamen({
+                                    layer: 'watercolor'
+                                })
+                            }),
+                            new ol.layer.Tile({
+                                source: new ol.source.Stamen({
+                                    layer: 'terrain-labels'
+                                })
+                            })
+                        ]
+                    }),
+                    /*new ol.layer.Tile({
+                        title: 'Water color',
+                        type: 'base',
+                        visible: false,
+                        source: new ol.source.Stamen({
+                            layer: 'watercolor'
+                        })
+                    }),*/
+                    new ol.layer.Tile({
+                      title: 'CartoDB Light',
+                      type: 'base',
+                      visible: false,
+                      source: new ol.source.XYZ({
+                        url:'http://{1-4}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+                        layer: 'CartoDB Dark'
+                      })
+                    }),
+                    new ol.layer.Tile({
+                        title: 'OSM',
+                        type: 'base',
+                        visible: true,
+                        source: new ol.source.OSM()
+                    })
+                ]
+            }),
+            new ol.layer.Group({
+                title: 'Overlays (à venir)',
+                layers: [
+                    /*new ol.layer.Image({
+                        title: 'Countries',
+                        source: new ol.source.ImageArcGISRest({
+                            ratio: 1,
+                            params: {'LAYERS': 'show:0'},
+                            url: "https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/Countries_December_2016_Boundaries/MapServer"
+                        })
+                    }),*/
+                    /*new ol.layer.Image({
+                      title: 'Kernel Density',
+                      source: new ol.source.ImageStatic({
+                        url: 'kernel5000-EPSG4326.png',
+                        projection: projection,
+                        imageExtent: extent
+                      })
+                    })*/
+                    ]
+                  })
+            ],
+        view: new ol.View({
+            center: [14432232.880829565227032, 8864868.11990000680089],
+            zoom: 12
+        })
+    });
+
+    var layerSwitcher = new ol.control.LayerSwitcher({
+        tipLabel: 'Légende' // Optional label for button
+    });
+    map.addControl(layerSwitcher);
+
+    /*var fullscreen = new ol.control.FullScreen();
+    map.addControl(fullscreen);*/
+
+    var scaleline = new ol.control.ScaleLine();
+    map.addControl(scaleline);
+
+/*add vector layers = geojson*/
+var vectorLayer = new ol.layer.Vector({
+  source: new ol.source.Vector({
+    features: features,
+    format: new ol.format.GeoJSON()
+  }),
+    style: new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 8,
+        stroke: new ol.style.Stroke({
+          color: 'black',
+          radius: 3,
+          width: 1
+        }),
+        fill: new ol.style.Fill({
+          color: 'orange'
+        })
+      })
+    })
+  });
+map.addLayer(vectorLayer);
+
+// information en cliquant sur site archéo
+    var infoDiv = document.getElementById("info");
+      map.on('click', function(event) {
+
+      var feature = map.forEachFeatureAtPixel(event.pixel, function(feature) {
+      return feature;
+      });
+      if (feature) {
+      infoDiv.innerHTML = "<h3><b>" + feature.get("lieu") + "</b></h3>" + "<br>" +
+            feature.get("imgy") + "<br>" + 
+            feature.get("descr") ; 
+      }
+      });
+
+})();
+</script>
+<!-- code source : https://www.w3scohols.com/howto/howto_css_example_website.asp -->
+<!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_example_website
+  http://turbo87.github.io/leaflet-sidebar/examples/ -->
+{% endblock content %}
