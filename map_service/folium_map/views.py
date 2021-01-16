@@ -1,6 +1,4 @@
 from django.shortcuts import render
-# from django.http import HttpResponse
-# from django.views.generic import TemplateView
 
 from requests import get
 import json
@@ -59,15 +57,3 @@ def folium_map(request):
     m = m._repr_html_()
     context = {'weather_f_map': m}
     return render(request, 'folium_map/folium_map.html', context)
-
-#-------------------------
-
-# def folium_map(request):
-#     m = folium.Map([51.5, -0.25], zoom_start=10)
-#     test = folium.Html('<b>Hello world</b>', script=True)
-#     popup = folium.Popup(test, max_width=2650)
-#     folium.RegularPolygonMarker(location=[51.5, -0.25], popup=popup).add_to(m)
-#     m = m._repr_html_()
-#     context = {'weather_f_map': m}
-
-#     return render(request, 'folium_map/folium_map.html', context)

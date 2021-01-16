@@ -1,5 +1,4 @@
 from django.shortcuts import render
-# from django.http import HttpResponse
 import requests
 from .models import City
 from .forms import CityForm
@@ -28,3 +27,5 @@ def weather(request):
 
 	context = {'weather_data': weather_data, 'form': form}
 	return render (request, 'weather/weather.html', context)  # returns the weather.html template
+
+# source: (not mine)
