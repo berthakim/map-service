@@ -7,22 +7,19 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    
     <!--style-->
     <link rel="stylesheet" type="text/css" href="{% static 'folium_map0/style.css' %}">
     <!--favicon-->
     <link rel="shortcut icon" type="image/png" href="{% static 'folium_map0/favicon_io/favicon.ico' %}">
 
-    <!-- Leaflet 1.3.0: -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
-    <!-- Load Esri Leaflet from CDN (for layers html == MAP) -->
-    <script src="https://unpkg.com/esri-leaflet@2.3.0/dist/esri-leaflet.js" integrity="sha512-1tScwpjXwwnm6tTva0l0/ZgM3rYNbdyMj5q6RSQMbNX6EUMhYDE3pMRGZaT41zHEvLoWEK7qFEJmZDOoDMU7/Q==" crossorigin=""></script>
+    <!-- OpenLayers: map and funciton for layers2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.0.1/css/ol.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'folium_map0/ol3-layerswitcher.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'folium_map0/layers2.css' %}">
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+    <script type="text/javascript" src="{% static 'folium_map0/ol3-layerswitcher.js' %}"></script>
 
-    <!-- Leaflet search in markers/features -->
-    <link rel="stylesheet" type="text/css" href="{% static 'folium_map0/leaflet-search-markers.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'folium_map0/leaflet-search.css' %}">
-    <script type="text/javascript" src="{% static 'folium_map0/leaflet-search.js' %}"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -30,13 +27,12 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-<!--style="position:fixed;"-->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link {% block folium_map0_active %}{% endblock %}" href="#">Map-folium_map0<span class="sr-only">(current)</span></a>
+            <a class="nav-link {% block meteo_active %}{% endblock %}" href="#">Map-meteo<span class="sr-only">(current)</span></a>
           <li class="nav-item">
-            <a class="nav-link {% block flood_active %}{% endblock %}" href="#">Map-flood</a>
+            <a class="nav-link {% block folium_map0_active %}{% endblock %}" href="#">Map-folium_map0</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% block fire %}{% endblock %}" href="#">Map-fire</a>
@@ -44,16 +40,18 @@
         </ul>
       </div>
     </nav>
-    <div class="container">
-        {% block content %}{% endblock content %}
-    </div>
+
+    {% block content %}{% endblock content %}
 
 <!--     <footer class="page-footer font-small teal pt-4">
        <div class="footer-copyright text-center py-3 bg-dark text-muted">© 2020 Copyright:
          <a href="#">Footer</a>
        </div>
     </footer> -->
-    
+    <div class="footy">
+      <p>© 2020 Copyright Footer</p>
+    </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

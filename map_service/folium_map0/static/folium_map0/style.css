@@ -22,3 +22,28 @@
 .first_line {
     margin-top:79px;
 }
+.footy {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #2C2F31;
+   color: grey;
+   text-align: center;
+   line-height: 34px;
+}
+
+/* columns folium0 */
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  /*height: 300px;  Should be removed. Only for demonstration */
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

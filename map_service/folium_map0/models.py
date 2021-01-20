@@ -1,3 +1,15 @@
 from django.db import models
 
-# Create your models here.
+class Light(models.Model):
+	id_day = models.IntegerField(primary_key=True)
+	day_ru = models.CharField(max_length=50)
+	sunrise = models.CharField(max_length=25)
+	sunet = models.CharField(max_length=20)
+	true_noon = models.CharField(max_length=20)
+	daylight_hours = models.CharField(max_length=30)
+	month_str = models.CharField(max_length=30)
+	day_int = models.IntegerField()
+	month_int = models.IntegerField()
+
+	def __str__(self):  # show the actual city name on the dashboard
+	    return self.day_ru
