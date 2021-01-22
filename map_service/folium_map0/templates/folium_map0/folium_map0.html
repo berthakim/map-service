@@ -32,6 +32,11 @@
 	  width: 200px;
 	  height: 150px;*/
 	}
+
+	.picture_size {
+		height: 43px;
+		width: 43px;
+	}
   </style>
 
 <div class='WebContainer articles' style="margin-top:79px;">
@@ -47,18 +52,37 @@
 				<div style="height:200px;background-color:">
 				    <div class="mh-100 d-inline-block p-2" style="height:500px;width:49%;border-radius: 25px;background: #73AD21;">
 				    	<div style="padding: 20px;">
-				    	{% for light in lights %}
-				    		{% if light.month_str == "Jan" and light.day_int == 20 %}
-					    		<h5>Wed, January 20</h5>
-					    		<p>Sunrise: 9:17</p>
-					    		<p>True Moon: 12:31</p>
-					    		<p>Sunset: 15:46</p>
-					    		<p>Daylight_hours: 6:29:02 </p>
-						    {% endif %}
-					    {% endfor %}
+				    	{% for i in lights %}
+							{% if i.month_int ==  now_month and i.day_int == now_day %}
+								<b>{{ i.month_str }} {{ i.day_int }}</b>
+								<p>Sunrise: {{ i.sunrise }}
+								{% for i in img_lights %}
+									{% if i.title == "sunrise_color" %}
+									    <img src="{{ i.img_file.url }}" class="picture_size">
+									{% endif %}
+								{% endfor %}
+								</p>
+								<p>True Moon: {{ i.true_noon }}
+								{% for i in img_lights %}
+									{% if i.id_img == 3 %}
+									<img src="{{ i.img_file.url }}" class="picture_size">
+									{% endif %}
+								{% endfor %}
+								</p>
+								<p>Sunset: {{ i.sunet }}
+								{% for i in img_lights %}
+									{% if i.title == "sunset_color" %}
+									<img src="{{ i.img_file.url }}" class="picture_size">
+									{% endif %}
+								{% endfor %}
+								</p>
+								<p>Daylight_hours: {{ i.daylight_hours }}</p>
+								<p>Now: {{ now_hour }}: {{ now_min }}</p>
+							{% endif %}
+						{% endfor %}
 						</div>
 				    </div>
-				    <div class="mh-100 d-inline-block p-2 bg-warning" style="height:500px;width:50%;border-radius: 25px;">Max Height 100%
+				    <div class="mh-100 d-inline-block p-2 bg-warning" style="height:500px;width:50%;border-radius: 25px;">
 				    </div>
 				 </div>
 			</div>

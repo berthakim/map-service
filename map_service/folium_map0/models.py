@@ -11,5 +11,14 @@ class Light(models.Model):
 	day_int = models.IntegerField()
 	month_int = models.IntegerField()
 
-	def __str__(self):  # show the actual city name on the dashboard
+	def __str__(self):
 	    return self.day_ru
+
+class ImageLight(models.Model):
+	id_img = models.IntegerField(primary_key=True)
+	title = models.CharField(max_length=25)
+	img_file = models.FileField(default='')
+	source = models.CharField(max_length=100)
+
+	def __str__(self):
+	    return self.title
