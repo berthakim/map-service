@@ -22,6 +22,7 @@ def folium_map0(request):
     now_hour, now_min = now.hour, now.minute
 
     context = {'my_map': m, 'lights': lights, 'now_day': now_day,
-               'now_month': now_month, 'img_lights': img_lights, 'now_hour': now_hour, 'now_min':now_min}
+               'now_month': now_month, 'img_lights': img_lights, 
+               'now_hour': now_hour, 'now_min':now_min}
 
     return render(request, 'folium_map0/folium_map0.html', context)
