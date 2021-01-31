@@ -30,6 +30,7 @@ urlpatterns = [
     path('folium0/', include('folium_map0.urls')),
     path('health/', include('health.urls')),
     path('anim/', include('anim.urls')),
+    path('foliums/', include('foliums.urls')),
     ]
 
 if settings.DEBUG:

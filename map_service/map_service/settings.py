@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'fire.apps.FireConfig',
     'weather.apps.WeatherConfig',
     'weather_map.apps.WeatherMapConfig',
-    'folium_map.apps.FoliumMapConfig',
-    'folium_map0.apps.FoliumMap0Config',
+    'folium_map.apps.FoliumMapConfig',  # /folium
+    'folium_map0.apps.FoliumMap0Config',  # folium0
+    'foliums.apps.FoliumsConfig',  # foliums
     'health.apps.HealthConfig',
     'anim.apps.AnimConfig',
     'django.contrib.admin',

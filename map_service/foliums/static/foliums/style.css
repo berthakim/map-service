@@ -1,0 +1,48 @@
+.h1 {
+    color: red;
+    font-family: Calibri, Arial, sans serif;
+}
+.test {
+    color: green;
+    font-size: 20pt;
+}
+
+.images {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: auto;
+}
+
+.content-text {
+    text-align: justify;
+}
+
+.first_line {
+    margin-top:79px;
+}
+.footy {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #2C2F31;
+   color: grey;
+   text-align: center;
+   line-height: 34px;
+}
+
+/* columns folium0 */
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 80%;
+  padding: 10px;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
