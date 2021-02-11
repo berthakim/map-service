@@ -7,7 +7,7 @@ import os
 import webbrowser
 import html
 
-url = 'your API token'
+url = 'http://api.openweathermap.org/data/2.5/find?lat=47.5&lon=2.5&cnt=10&units=metric&appid=969bd7bdde2aa8690b83ebfa2b4056cb'
 
 stations = get(url).json()
 

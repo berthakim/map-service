@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'xjfiuno=4htcr6hon0y3^yh^@o2+-%^t&n!r-m_@o6a%qp(p#m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,6 +87,11 @@ WSGI_APPLICATION = 'map_service.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'map_services',
+        'USER': 'bertha',
+        'PASSWORD': '557878ars',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',  # Set to empty string for default / localhost
     }
 }
 
